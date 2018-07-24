@@ -56,7 +56,13 @@ void handle_request(int fd){
 		write_all(fd,http_version,len);
 	}
 	
-	
+	/// read to close
+
+	while(True){
+		int n = read(fd,buf,0x1000);
+		if(n<=0) break;
+	}
+	close(fd);
 	//HTTP/1.1 200 OK
 	//Content-Type: text/html
 	//Content
@@ -101,7 +107,6 @@ int main(int argc,char** argv){
 		unsigned int addrlen = sizeof(client_addr);
 		clientfd = accept(sockfd,(struct sockaddr*)&client_addr,&addrlen);
 		handle_request(clientfd);
-		close(clientfd);
 	}
 
 }
