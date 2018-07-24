@@ -70,6 +70,11 @@ void handle_request(int fd){
 
 int main(int argc,char** argv){
 	
+
+	if(argc<2){
+		puts("./server [port}");
+		return 0;
+	}
 	int sockfd;
 	struct sockaddr_in server_addr;
 
@@ -93,7 +98,7 @@ int main(int argc,char** argv){
 	while(1){
 		int clientfd,childpid;
 		struct sockaddr_in client_addr;
-		int addrlen = sizeof(client_addr);
+		unsigned int addrlen = sizeof(client_addr);
 		clientfd = accept(sockfd,(struct sockaddr*)&client_addr,&addrlen);
 		handle_request(clientfd);
 		close(clientfd);
